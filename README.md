@@ -1,1 +1,4 @@
-# chiayu
+requests
+numpy
+pandas
+matplotlib
