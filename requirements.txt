@@ -4,3 +4,4 @@ pandas
 matplotlib
 wegt
 openpyxl
+yfinance
