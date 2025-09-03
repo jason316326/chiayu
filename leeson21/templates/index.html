@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待辦事項清單</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">待辦事項清單</h1>
+        
+        <!-- 新增待辦事項表單 -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="{{ url_for('add_todo') }}" method="POST">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="title" placeholder="待辦事項標題" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" name="description" placeholder="描述（選填）" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">新增</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 待辦事項列表 -->
+        <div class="todo-list">
+            {% for todo in todos %}
+            <div class="card mb-2 {% if todo.completed %}completed{% endif %}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">{{ todo.title }}</h5>
+                            {% if todo.description %}
+                            <p class="card-text">{{ todo.description }}</p>
+                            {% endif %}
+                            <small class="text-muted">{{ todo.created_at.strftime('%Y/%m/%d %H:%M') }}</small>
+                        </div>
+                        <div>
+                            <a href="{{ url_for('complete_todo', id=todo.id) }}" class="btn btn-sm btn-success">
+                                {% if todo.completed %}取消完成{% else %}標記完成{% endif %}
+                            </a>
+                            <a href="{{ url_for('delete_todo', id=todo.id) }}" class="btn btn-sm btn-danger" 
+                               onclick="return confirm('確定要刪除這個待辦事項嗎？')">刪除</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
