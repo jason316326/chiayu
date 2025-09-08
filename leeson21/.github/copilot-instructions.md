@@ -1,74 +1,45 @@
 # Copilot 指令 (Flask Todo 應用程式)
 
-## 專案概述
-這是一個使用 Flask 框架開發的待辦事項清單應用程式。專案採用 MVC 架構，使用 SQLite 作為資料庫。
+專案概述
+這是一個 Flask Web 應用專案，使用模板系統來渲染網頁內容。專案採用簡潔的 MVC 架構設計。
 
-## 環境設定
-### 必要條件
-- Python 環境：使用 Conda base 環境
-- 資料庫：SQLite (自動建立於 instance/app.db)
+環境設置
+Python 環境
+使用 conda 環境：chia080
+Python 版本：3.12.11
+執行前必須啟動環境：conda activate chia080
+依賴套件
+主要套件（詳見 requirements.txt）：
 
-### 快速開始
-1. 啟動環境：
-```bash
-conda activate base
-```
-
-2. 安裝依賴：
-```bash
-pip install -r requirements.txt
-```
-
-3. 初始化資料庫：
-```bash
-python -c "from app import db; db.create_all()"
-```
-
-4. 啟動應用程式：
-```bash
-python app.py
-```
-
-## 專案結構
-```
+Flask 3.0.2：Web 框架
+python-dotenv 1.0.1：環境變數管理
+專案架構
 lesson21/
-├── .env                # 環境變數設定
-├── app.py             # 主應用程式 (路由、模型定義)
-├── requirements.txt   # 專案依賴
-├── static/           # 靜態資源 (CSS)
-└── templates/        # HTML 模板
-```
+├── app.py              # Flask 應用主程式
+├── templates/          # HTML 模板目錄
+│   └── home.html      # 首頁模板
+└── requirements.txt    # 相依套件列表
+關鍵模式和慣例
+模板設計
+使用 templates/ 目錄存放所有 HTML 模板
+HTML 模板採用 UTF-8 編碼，支援中文顯示
+模板中包含內聯 CSS 樣式
+使用響應式設計支援多種設備
+路由規則
+所有路由定義在 app.py 中
+使用 Flask 的 render_template() 來渲染模板
+開發工作流程
+環境準備：
 
-## 核心組件
-1. 資料模型 (`app.py`)：
-   - `Todo` 類別：管理待辦事項
-   - 欄位：id, title, description, created_at, completed
+conda activate chia080
+安裝依賴：
 
-2. 路由 (`app.py`)：
-   - GET `/`: 顯示所有待辦事項
-   - POST `/add`: 新增待辦事項
-   - GET `/complete/<id>`: 切換完成狀態
-   - GET `/delete/<id>`: 刪除待辦事項
+pip install -r requirements.txt
+執行應用：
 
-## 開發工作流程
-1. 資料庫變更：
-   - 修改 `Todo` 模型後，需要重新執行 `db.create_all()`
-   - 資料庫檔案位於 `instance/app.db`
-
-2. 前端修改：
-   - HTML 模板位於 `templates/index.html`
-   - CSS 樣式位於 `static/style.css`
-
-## 注意事項
-- 執行任何 Python 命令前必須先激活 Conda 環境
-- 修改資料模型後需要重新初始化資料庫
-- 保持 `.env` 檔案的安全性，不要提交敏感資訊
-
-## 常見問題排解
-1. 資料庫錯誤：
-   - 刪除 `instance/app.db`
-   - 重新執行 `db.create_all()`
-
-2. 套件相關錯誤：
-   - 確認是否在正確的 Conda 環境中
-   - 重新執行 `pip install -r requirements.txt`
+python app.py
+注意事項
+開發模式已啟用（debug=True）
+應用程式預設運行在 http://localhost:5000
+使用 微軟正黑體 作為預設中文字體
+採用響應式設計，最大內容寬度為 800px
