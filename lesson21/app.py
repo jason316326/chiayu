@@ -1,16 +1,15 @@
 from flask import Flask, render_template, request
-from google import genai
+import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 import markdown2
 
 load_dotenv()
 
-
 app = Flask(__name__)
 
 # 初始化 Gemini 客戶端
-client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # 首頁路由
 @app.route('/')
@@ -26,10 +25,8 @@ def gemini():
         user_input = request.form.get('user_input')
         if user_input:
             # 生成回應
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=user_input
-            )
+            model = genai.GenerativeModel('gemini-pro')
+            response = model.generate_content(user_input)
             # 將回應轉換為 HTML
             if response and response.text:
                 html_content = markdown2.markdown(response.text)
